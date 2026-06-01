@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { API_BASE_URL, normalizeApiResponse } from '../api';
+import { normalizeApiResponse } from '../api';
+
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
+const ENDPOINT = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/teams`
+  : 'http://localhost:8000/api/teams';
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
@@ -7,7 +12,7 @@ const Teams = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/teams`)
+    fetch(ENDPOINT)
       .then((res) => res.json())
       .then((data) => setTeams(normalizeApiResponse(data)))
       .catch((err) => setError(err.message || 'Failed to load teams'))
@@ -17,7 +22,7 @@ const Teams = () => {
   return (
     <section>
       <h2>Teams</h2>
-      <p>API: <code>{`${API_BASE_URL}/teams`}</code></p>
+      <p>API: <code>{ENDPOINT}</code></p>
       {loading && <p>Loading teams...</p>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && (

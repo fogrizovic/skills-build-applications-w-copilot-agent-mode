@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { API_BASE_URL, normalizeApiResponse } from '../api';
+import { normalizeApiResponse } from '../api';
+
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
+const ENDPOINT = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/users`
+  : 'http://localhost:8000/api/users';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -7,7 +12,7 @@ const Users = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/users`)
+    fetch(ENDPOINT)
       .then((res) => res.json())
       .then((data) => setUsers(normalizeApiResponse(data)))
       .catch((err) => setError(err.message || 'Failed to load users'))
@@ -17,7 +22,7 @@ const Users = () => {
   return (
     <section>
       <h2>Users</h2>
-      <p>API: <code>{`${API_BASE_URL}/users`}</code></p>
+      <p>API: <code>{ENDPOINT}</code></p>
       {loading && <p>Loading users...</p>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && (

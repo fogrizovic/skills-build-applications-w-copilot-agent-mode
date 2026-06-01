@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { API_BASE_URL, normalizeApiResponse } from '../api';
+import { normalizeApiResponse } from '../api';
+
+const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
+const ENDPOINT = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev/api/workouts`
+  : 'http://localhost:8000/api/workouts';
 
 const Workouts = () => {
   const [workouts, setWorkouts] = useState([]);
@@ -7,7 +12,7 @@ const Workouts = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/workouts`)
+    fetch(ENDPOINT)
       .then((res) => res.json())
       .then((data) => setWorkouts(normalizeApiResponse(data)))
       .catch((err) => setError(err.message || 'Failed to load workouts'))
@@ -17,7 +22,7 @@ const Workouts = () => {
   return (
     <section>
       <h2>Workouts</h2>
-      <p>API: <code>{`${API_BASE_URL}/workouts`}</code></p>
+      <p>API: <code>{ENDPOINT}</code></p>
       {loading && <p>Loading workouts...</p>}
       {error && <p className="error">{error}</p>}
       {!loading && !error && (
