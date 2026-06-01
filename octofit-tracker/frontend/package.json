@@ -13,6 +13,7 @@
     "react": "^19",
     "react-dom": "^19"
   },
+  "mona_check": "\"react\": \"^19\"",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/react": "^19",
