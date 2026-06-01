@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import User from '../models/user';
 
-export const listUsers = async (req: Request, res: Response) => {
+export const listUsers = async (_req: Request, res: Response) => {
   try {
     const users = await User.find().limit(50).lean();
-    res.json(users);
+    return res.json(users);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch users' });
+    return res.status(500).json({ error: 'Failed to fetch users' });
   }
 };
 
@@ -14,9 +14,9 @@ export const createUser = async (req: Request, res: Response) => {
   try {
     const { name, email } = req.body;
     const user = await User.create({ name, email });
-    res.status(201).json(user);
+    return res.status(201).json(user);
   } catch (err) {
-    res.status(400).json({ error: 'Failed to create user' });
+    return res.status(400).json({ error: 'Failed to create user' });
   }
 };
 
@@ -24,9 +24,9 @@ export const getUser = async (req: Request, res: Response) => {
   try {
     const user = await User.findById(req.params.id).lean();
     if (!user) return res.status(404).json({ error: 'User not found' });
-    res.json(user);
+    return res.json(user);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch user' });
+    return res.status(500).json({ error: 'Failed to fetch user' });
   }
 };
 
@@ -34,8 +34,8 @@ export const deleteUser = async (req: Request, res: Response) => {
   try {
     const result = await User.findByIdAndDelete(req.params.id);
     if (!result) return res.status(404).json({ error: 'User not found' });
-    res.status(204).end();
+    return res.status(204).end();
   } catch (err) {
-    res.status(500).json({ error: 'Failed to delete user' });
+    return res.status(500).json({ error: 'Failed to delete user' });
   }
 };

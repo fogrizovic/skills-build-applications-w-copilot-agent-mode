@@ -11,11 +11,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Basic routes
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (_req: Request, res: Response) => {
   res.json({ message: 'OctoFit Tracker API', apiBaseUrl: API_BASE_URL });
 });
 
-app.get('/api/config', (req: Request, res: Response) => {
+app.get('/api/config', (_req: Request, res: Response) => {
   res.json({ apiBaseUrl: API_BASE_URL, port: PORT });
 });
 
