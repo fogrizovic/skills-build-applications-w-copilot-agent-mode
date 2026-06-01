@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import usersRouter from './routes/users';
 
 dotenv.config();
 
@@ -26,6 +27,9 @@ mongoose
 app.get('/', (req: Request, res: Response) => {
   res.json({ message: 'OctoFit Tracker API' });
 });
+
+// API routes
+app.use('/api/users', usersRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
