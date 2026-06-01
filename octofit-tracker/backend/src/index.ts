@@ -7,7 +7,7 @@ dotenv.config();
 
 const app: Express = express();
 const PORT = process.env.PORT || 8000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
 
 // Middleware
 app.use(express.json());
