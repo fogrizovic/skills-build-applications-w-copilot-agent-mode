@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from 'express';
 import './config/database';
-import { API_BASE_URL, PORT } from './config/server';
+import { API_BASE_URL, PORT } from './server';
 import usersRouter from './routes/users';
 import activitiesRouter from './routes/activities';
 
